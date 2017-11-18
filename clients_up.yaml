@@ -1,0 +1,28 @@
+- hosts: tag_headless-client
+  gather_facts: no
+
+  tasks:
+    - name: boot instances
+      gce:
+          instance_names: "pdg-headless-client-{{ item }}"
+          zone: "{{ zone }}"
+          service_account_email: "{{ service_account_email }}"
+          credentials_file: "{{ credentials_file }}"
+          project_id: "{{ project_id }}"
+          state: started
+      register: gce
+      with_sequence: count=3
+      delegate_to: localhost
+
+    - name: wait for instances to be ready for SSH
+      wait_for_connection:
+
+- hosts: tag_headless-client
+  become: yes
+  become_method: sudo
+  strategy: free
+  tasks:
+    - include_role:
+        name: headless_client
+      vars:
+        arma_host: 162.248.91.24

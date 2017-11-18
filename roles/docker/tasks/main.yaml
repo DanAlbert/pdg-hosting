@@ -1,0 +1,30 @@
+- name: update apt cache
+  apt:
+    update_cache: yes
+
+- name: install packages
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - software-properties-common
+    - python-pip
+
+- name: add docker apt key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+
+- name: add docker apt repository
+  apt_repository:
+    repo: "{{ repo }}"
+    mode: 644
+
+- name: install docker
+  apt:
+    name: docker-ce
+    update_cache: yes
+
+- name: isntall docker-py
+  pip:
+    name: docker-py

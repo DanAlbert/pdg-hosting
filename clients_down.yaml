@@ -1,0 +1,16 @@
+- name: halt instances
+  hosts: localhost
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: halt instances
+      gce:
+          instance_names: "pdg-headless-client-{{ item }}"
+          zone: "{{ zone }}"
+          service_account_email: "{{ service_account_email }}"
+          credentials_file: "{{ credentials_file }}"
+          project_id: "{{ project_id }}"
+          state: stopped
+      register: gce
+      with_sequence: count=3

@@ -1,0 +1,11 @@
+- name: pull the docker image from the Google Container Registry
+  shell: "gcloud docker -- pull {{ docker_image }}"
+
+- name: start client container
+  docker_container:
+    name: headless-client
+    image: "{{ docker_image }}"
+    env:
+      ARMA_HOST: "{{ arma_host }}"
+      STEAM_USER: "{{ steam_user }}"
+      STEAM_PASS: "{{ steam_pass }}"

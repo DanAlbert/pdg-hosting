@@ -1,0 +1,83 @@
+- name: register external IP addresses
+  hosts: localhost
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: create addresses for headless clients
+      gce_eip:
+        name: "pdg-headless-{{ item }}"
+        region: "{{ region }}"
+        service_account_email: "{{ service_account_email }}"
+        credentials_file: "{{ credentials_file }}"
+        project_id: "{{ project_id }}"
+      with_sequence: count=3
+
+- name: create instance
+  hosts: localhost
+  gather_facts: no
+  connection: local
+
+  vars:
+    # The Linux arma3server is still 32-bit only, so we can't benefit from more
+    # RAM.
+    machine_type: n1-highcpu-8
+
+    image_project: cos-cloud
+
+    # Can't use COS until https://github.com/ansible/ansible/issues/26297
+    # is resolved.
+    # image: cos-stable-62-9901-75-0
+    image: ubuntu-1604
+
+  tasks:
+    - name: create instances
+      gce:
+          instance_names: "pdg-headless-client-{{ item }}"
+          machine_type: "{{ machine_type }}"
+          zone: "{{ zone }}"
+          image: "{{ image }}"
+          external_projects: "{{ image_project }}"
+          external_ip: "pdg-headless-{{ item }}"
+          tags: headless-client
+          service_account_email: "{{ service_account_email }}"
+          credentials_file: "{{ credentials_file }}"
+          project_id: "{{ project_id }}"
+          preemptible: yes
+      register: gce
+      with_sequence: count=3
+
+    - name: add instances to headless_clients
+      add_host:
+        hostname: "{{ item.1.public_ip }}"
+        groupname: headless_clients
+      with_subelements:
+        - "{{ gce.results }}"
+        - instance_data
+
+    - name: wait for instances to be ready for SSH
+      wait_for:
+          host: "{{ item.1.public_ip }}"
+          port: 22
+          delay: 10
+          timeout: 60
+      with_subelements:
+        - "{{ gce.results }}"
+        - instance_data
+
+- name: prepare instances
+  hosts: headless_clients
+  become: yes
+  become_method: sudo
+  roles:
+    - docker
+
+- hosts: headless_clients
+  become: yes
+  become_method: sudo
+  strategy: free
+  tasks:
+    - include_role:
+        name: headless_client
+      vars:
+        arma_host: 162.248.91.24

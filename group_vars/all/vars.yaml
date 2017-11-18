@@ -1,0 +1,6 @@
+region: us-central1
+zone: us-central1-c
+mods_disk: UUID=d7b14746-c14b-4b68-ab22-21b4fee10400
+project_id: pdg-hosting
+credentials_file: key.json
+service_account_email: ansible@pdg-hosting.iam.gserviceaccount.com
