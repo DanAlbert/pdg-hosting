@@ -76,13 +76,3 @@
   become_method: sudo
   roles:
     - docker
-
-- hosts: headless_clients
-  become: yes
-  become_method: sudo
-  strategy: free
-  tasks:
-    - include_role:
-        name: headless_client
-      vars:
-        arma_host: 162.248.91.24
