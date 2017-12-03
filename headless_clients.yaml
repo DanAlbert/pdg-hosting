@@ -43,6 +43,9 @@
           service_account_email: "{{ service_account_email }}"
           credentials_file: "{{ credentials_file }}"
           project_id: "{{ project_id }}"
+          # Required for disk_size to take effect.
+          persistent_boot_disk: true
+          disk_size: 50
           # While it makes the instances cheaper, they are preempted very often,
           # and we don't want this to happen during a mission.
           preemptible: no
