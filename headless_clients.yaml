@@ -43,7 +43,9 @@
           service_account_email: "{{ service_account_email }}"
           credentials_file: "{{ credentials_file }}"
           project_id: "{{ project_id }}"
-          preemptible: yes
+          # While it makes the instances cheaper, they are preempted very often,
+          # and we don't want this to happen during a mission.
+          preemptible: no
       register: gce
       with_sequence: count=3
 
