@@ -34,7 +34,7 @@ $ chmod 600 key.json
 $ ./run.sh headless_clients.yaml
 
 # Bring up the clients for pub 1.
-$ ./run.sh clients_up.yaml
+$ ./run.sh clients_pub1.yaml
 
 # Bring down the clients. Be sure to do this when they are not in use.
 $ ./run.sh clients_down.yaml
