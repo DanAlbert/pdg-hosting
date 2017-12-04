@@ -1,0 +1,26 @@
+- hosts: tag_headless-client
+  gather_facts: no
+
+  tasks:
+    - include_role:
+        name: booted
+
+- hosts: tag_headless-client
+  become: yes
+  become_method: sudo
+  strategy: free
+  tasks:
+    - include_role:
+        name: headless_client
+      vars:
+        arma_host: 162.248.91.14
+        arma_pass: "{{ ops_pass }}"
+        a3sync_url: ftp://pdgmods.game.nfoservers.com
+        a3sync_scheme: FTP
+        a3sync_port: 21
+        mods:
+          - ace
+          - acex
+          - cba_a3
+          - cup_tc
+          - rz

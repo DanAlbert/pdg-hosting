@@ -5,7 +5,19 @@
   docker_container:
     name: headless-client
     image: "{{ docker_image }}"
+    # Required for FUSE, which we need for mounting the mods directory in a
+    # case-insensitive file system.
+    privileged: yes
+    volumes:
+      - /opt/arma3:/arma3:rw
     env:
       ARMA_HOST: "{{ arma_host }}"
+      ARMA_PASS: "{{ arma_pass }}"
       STEAM_USER: "{{ steam_user }}"
       STEAM_PASS: "{{ steam_pass }}"
+      A3SYNC_SCHEME: "{{ a3sync_scheme }}"
+      A3SYNC_PORT: "{{ a3sync_port }}"
+      A3SYNC_URL: "{{ a3sync_url }}"
+      A3SYNC_USER: "{{ a3sync_user }}"
+      A3SYNC_PASS: "{{ a3sync_pass }}"
+    command: "{{ mods | format_mods_arg }}"
