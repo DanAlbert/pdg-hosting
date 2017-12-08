@@ -1,5 +1,6 @@
 docker_image: us.gcr.io/pdg-hosting/arma3-headless-client
-a3sync_url:
-a3sync_scheme:
-a3sync_port:
+arma_pass: ''
+a3sync_url: ''
+a3sync_scheme: ''
+a3sync_port: ''
 mods: []

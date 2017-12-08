@@ -13,15 +13,22 @@
     - include_role:
         name: headless_client
       vars:
-        arma_host: 162.248.91.14
-        arma_pass: "{{ ops_pass }}"
-        a3sync_enabled: true
+        arma_host: 66.151.244.237
         a3sync_url: ftp://pdgmods.game.nfoservers.com
         a3sync_scheme: FTP
         a3sync_port: 21
         mods:
-          - @ace
-          - @acex
-          - @cba_a3
-          - @cup_tc
-          - @rz
+          - "@advancedurbanrappelling"
+          - "@ares"
+          - "@bc"
+          - "@cba_a3"
+          - "@cup_tc"
+          - "@em"
+          - "@popfor"
+          - "@spec4gear"
+          - "@stui"
+          - "@tryk"
+          - "rhs/@rhsafaf"
+          - "rhs/@rhsafrf"
+          - "rhs/@rhsgref"
+          - "rhs/@rhssaf"
