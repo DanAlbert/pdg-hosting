@@ -20,8 +20,32 @@
         a3sync_scheme: FTP
         a3sync_port: 21
         mods:
-          - @ace
-          - @acex
-          - @cba_a3
-          - @cup_tc
-          - @rz
+          - "@ace"
+          - "@acex"
+          - "@adr97"
+          - "@advancedurbanrappelling"
+          - "@alive"
+          - "@asdg_jr"
+          - "@asdga"
+          - "@bc"
+          - "@cba_a3"
+          - "@cup_tc"
+          - "@fhq_accessories"
+          - "@fhq_weapons"
+          - "@hafm"
+          - "@inconeffectsv1.2"
+          - "@isc"
+          - "@lsd_nvg"
+          - "@mrg_units_sfx"
+          - "@mrt_accfncs"
+          - "@rz"
+          - "@spec4gear"
+          - "@stui"
+          - "@task_force_radio"
+          - "@tfw_radios"
+          - "@tryk"
+          - "@ultimate_soldier2mp"
+          - "rhs/@rhsafaf"
+          - "rhs/@rhsgref"
+          - "rhs/@rhssaf"
+          - "rhs/@rhsusaf"
