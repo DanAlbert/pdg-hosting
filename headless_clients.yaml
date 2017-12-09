@@ -13,7 +13,7 @@
         project_id: "{{ project_id }}"
       with_sequence: count=3
 
-- name: create instance
+- name: create instances
   hosts: localhost
   gather_facts: no
   connection: local
@@ -31,24 +31,38 @@
     image: ubuntu-1604
 
   tasks:
+    # Separate task because we can't create SSDs with the gce module.
+    - name: create boot disks
+      gce_pd:
+        name: "pdg-headless-client-{{ item }}"
+        zone: "{{ zone }}"
+        external_projects: "{{ image_project }}"
+        image: "{{ image }}"
+        disk_type: pd-ssd
+        mode: READ_WRITE
+        size_gb: 50
+        service_account_email: "{{ service_account_email }}"
+        credentials_file: "{{ credentials_file }}"
+        project_id: "{{ project_id }}"
+        state: present
+      with_sequence: count=3
+
     - name: create instances
       gce:
-          instance_names: "pdg-headless-client-{{ item }}"
-          machine_type: "{{ machine_type }}"
-          zone: "{{ zone }}"
-          image: "{{ image }}"
-          external_projects: "{{ image_project }}"
-          external_ip: "pdg-headless-{{ item }}"
-          tags: headless-client
-          service_account_email: "{{ service_account_email }}"
-          credentials_file: "{{ credentials_file }}"
-          project_id: "{{ project_id }}"
-          # Required for disk_size to take effect.
-          persistent_boot_disk: true
-          disk_size: 50
-          # While it makes the instances cheaper, they are preempted very often,
-          # and we don't want this to happen during a mission.
-          preemptible: no
+        instance_names: "pdg-headless-client-{{ item }}"
+        machine_type: "{{ machine_type }}"
+        zone: "{{ zone }}"
+        disks:
+          - name: "pdg-headless-client-{{ item }}"
+            mode: READ_WRITE
+        external_ip: "pdg-headless-{{ item }}"
+        tags: headless-client
+        service_account_email: "{{ service_account_email }}"
+        credentials_file: "{{ credentials_file }}"
+        project_id: "{{ project_id }}"
+        # While it makes the instances cheaper, they are preempted very often,
+        # and we don't want this to happen during a mission.
+        preemptible: no
       register: gce
       with_sequence: count=3
 
