@@ -18,12 +18,15 @@
         a3sync_scheme: FTP
         a3sync_port: 21
         mods:
+          - "@ace"
+          - "@ace_cpr"
           - "@advancedurbanrappelling"
           - "@ares"
           - "@bc"
           - "@cba_a3"
           - "@cup_tc"
           - "@em"
+          - "@jsrs"
           - "@popfor"
           - "@spec4gear"
           - "@stui"
