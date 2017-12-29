@@ -1,0 +1,4 @@
+docker_image: us.gcr.io/pdg-hosting/arma3sync:latest
+a3sync_url: ''
+a3sync_scheme: ''
+a3sync_port: ''

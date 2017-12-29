@@ -1,0 +1,19 @@
+- name: pull the docker image from the Google Container Registry
+  shell: "gcloud docker -- pull {{ docker_image }}"
+
+- name: start client container
+  docker_container:
+    name: arma3sync
+    image: "{{ docker_image }}"
+    # Required for FUSE, which we need for mounting the mods directory in a
+    # case-insensitive file system.
+    privileged: yes
+    detach: no
+    volumes:
+      - /opt/arma3:/arma3:rw
+    env:
+      A3SYNC_SCHEME: "{{ a3sync_scheme }}"
+      A3SYNC_PORT: "{{ a3sync_port }}"
+      A3SYNC_URL: "{{ a3sync_url }}"
+      A3SYNC_USER: "{{ a3sync_user }}"
+      A3SYNC_PASS: "{{ a3sync_pass }}"

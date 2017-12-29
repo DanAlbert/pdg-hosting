@@ -14,9 +14,6 @@
         name: headless_client
       vars:
         arma_host: 66.151.244.237
-        a3sync_url: ftp://pdgmods.game.nfoservers.com
-        a3sync_scheme: FTP
-        a3sync_port: 21
         mods:
           - "@ace"
           - "@ace_cpr"
